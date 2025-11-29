@@ -8,4 +8,6 @@ metadata:
 # annotations are also used to add metadata to the objects, have more key value char limit and to select external resources.
 spec:
   containers:
-  - name:
+  - name: almalinux
+    image: almalinux
+    command: ["sleep","1000"]
