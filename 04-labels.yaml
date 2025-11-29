@@ -8,5 +8,6 @@ metadata:
   namespace: roboshop
 spec:
   containers:
-  - name: nginx-1
-    image: nginx 
+  - name: almalinux
+    image: almalinux
+    command: ["sleep","1000"]
