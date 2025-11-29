@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginx
-  labels:
+  labels: # labels are used to select internal cluster resources 
     Project: roboshop
     environment: dev
   namespace: roboshop

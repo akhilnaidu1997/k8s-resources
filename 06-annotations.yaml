@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: annotations
+  annotations:
+    jenkins.url: "https://joindevops/k8s.com"
+    imageregistry: "https://hub.docker.com/"
+# annotations are also used to add metadata to the objects, have more key value char limit and to select external resources.
+spec:
+  containers:
+  - name:
