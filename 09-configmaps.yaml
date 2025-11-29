@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMaps
+metadata: 
+  name: configmaps
+  namespace: roboshop
+data: 
+  course: DevSecOps
+  Trainer: ShivaKumar
+  Duration: "120hr"
