@@ -3,11 +3,10 @@ kind: Pod
 metadata:
   name: nginx
   Project: roboshop
-  namesppace: roboshop
+  namespace: roboshop
 spec:
   containers:
   - name: nginx
     image: nginx
     ports:
     - containerPort: 80
-    
