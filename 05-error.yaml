@@ -4,7 +4,9 @@ metadata:
   name: error-demo 
 spec:
   containers:
-  - name: nginx
-    image: nginxnhdlfj
-    ports:
-    - containerPort: 80
+  # - name: nginx
+  #   image: nginxnhdlfj
+  #   ports:
+  #   - containerPort: 80
+  - name: almalinux
+    image: almalinux
