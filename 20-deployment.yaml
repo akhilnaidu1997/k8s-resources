@@ -7,7 +7,7 @@ metadata:
     environment: dev
   namespace: roboshop
 spec:
-  stratgey:
+  strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
