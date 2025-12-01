@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: nginx
 spec:
-  selectors:
+  selector:
     Project: roboshop
     component: frontend
     environment: dev
