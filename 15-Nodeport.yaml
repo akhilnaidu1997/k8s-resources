@@ -4,7 +4,7 @@ metadata:
   name: nginx-np-demo
 spec:
   type: NodePort
-  selectors:
+  selector:
     Project: roboshop
     component: frontend
     environment: dev
