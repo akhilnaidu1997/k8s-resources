@@ -10,4 +10,4 @@ spec:
   ports:
   - protocol: TCP
     port: 80 # this can be 80 as default service port or we can give any other
-    targetPort: 9376 # containerport
+    targetPort: 80 # containerport
