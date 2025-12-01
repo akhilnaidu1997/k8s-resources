@@ -4,7 +4,7 @@ metadata:
   name: nginx-lb-service
 spec:
   type: LoadBalancer
-  selectors:
+  selector:
     Project: roboshop
     component: frontend
     environment: dev
@@ -13,4 +13,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodeport: 30007
+    nodePort: 30007
