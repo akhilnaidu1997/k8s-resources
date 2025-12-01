@@ -7,6 +7,12 @@ metadata:
     environment: dev
   namespace: roboshop
 spec:
+  stratgey:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 30
   replicas: 4
   selector:
     matchLabels:
@@ -20,4 +26,4 @@ spec:
     spec:
       containers:
       - name: nginx-dep
-        image: nginx:trixie-perl
+        image: nginx
