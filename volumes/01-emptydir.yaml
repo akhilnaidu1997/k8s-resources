@@ -14,11 +14,11 @@ spec:
       mountPath: /var/log/nginx
   - name: almalinux
     image: almalinux:9
-    readOnly: true
     command: ["sleep","100000"]
     volumeMounts:
     - name: emptydir-vol
       mountPath: /tmp/nginx
+      readOnly: true
   volumes:
   - name: emptydir-vol
     emptyDir:
