@@ -34,7 +34,8 @@ metadata:
   name: ebs-sc-svc
   namespace: roboshop
 spec:
-  purpose: ebs-sc 
+  selector:
+    purpose: ebs-sc 
   type: LoadBalancer
   ports:
   - protocol: TCP
