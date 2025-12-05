@@ -14,14 +14,30 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: app
+  labels:
+    purpose: ebs-sc
 spec:
   containers:
   - name: nginx
     image: nginx
     volumeMounts:
     - name: persistent-storage
-      mountPath: /data
+      mountPath: /usr/share/nginx/html/
   volumes:
   - name: persistent-storage
     persistentVolumeClaim:
       claimName: ebs-claim
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: ebs-sc-svc
+  namespace: roboshop
+spec:
+  purpose: ebs-sc 
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30007
