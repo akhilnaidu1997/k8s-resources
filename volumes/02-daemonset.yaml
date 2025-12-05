@@ -26,7 +26,6 @@ spec:
       containers:
       - name: fluentd-elasticsearch
         image: quay.io/fluentd_elasticsearch/fluentd:v5.0.1
-        readOnly: true
         resources:
           limits:
             memory: 200Mi
@@ -36,6 +35,7 @@ spec:
         volumeMounts:
         - name: varlog
           mountPath: /var/log
+          readOnly: true
       # it may be desirable to set a high priority class to ensure that a DaemonSet Pod
       # preempts running Pods
       # priorityClassName: important
