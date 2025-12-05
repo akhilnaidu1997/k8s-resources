@@ -18,6 +18,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ebs-claim
+  namespace: roboshop
 spec:
   storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
   volumeName: test-pv
@@ -31,6 +32,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: app
+  namespace: roboshop
+  labels:
+    purpose: volumes 
 spec:
   containers:
   - name: nginx
@@ -42,3 +46,18 @@ spec:
   - name: persistent-storage
     persistentVolumeClaim:
       claimName: ebs-claim
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: ebs-svc
+  namespace: roboshop
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: volumes
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30007
