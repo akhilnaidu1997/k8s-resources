@@ -34,7 +34,8 @@ metadata:
   name: app
   namespace: roboshop
   labels:
-    purpose: volumes 
+    purpose: volumes
+    topology.kubernetes.io/zone: us-east-1a 
 spec:
   containers:
   - name: nginx
