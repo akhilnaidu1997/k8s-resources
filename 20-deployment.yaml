@@ -27,3 +27,16 @@ spec:
       containers:
       - name: nginx-dep
         image: nginx
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: deploy-svc
+spec:
+  selector:
+    Project: roboshop
+    environment: dev
+  ports:
+  - protocol: TCP
+    targetPort: 80
+    port: 80
