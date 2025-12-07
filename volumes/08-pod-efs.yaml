@@ -15,6 +15,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: efs-app
+  labels: 
+    purpose: efs-sc
 spec:
   containers:
     - name: nginx
@@ -26,3 +28,18 @@ spec:
     - name: persistent-storage
       persistentVolumeClaim:
         claimName: efs-claim
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: ebs-sc-svc
+  namespace: roboshop
+spec:
+  selector:
+    purpose: efs-sc 
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30007
