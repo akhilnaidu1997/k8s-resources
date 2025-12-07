@@ -46,7 +46,7 @@ kind: Service
 metadata:
   name: deploy-svc
 spec:
-  clusterIp: None 
+  clusterIP: None 
   selector:
     Project: roboshop
     environment: dev
