@@ -44,7 +44,7 @@ spec:
 apiVersion: v1 
 kind: Service
 metadata:
-  name: deploy-svc
+  name: deploy-headless
 spec:
   clusterIP: None 
   selector:
