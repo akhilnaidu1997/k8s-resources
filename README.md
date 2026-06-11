@@ -61,4 +61,30 @@ annotations:
 ```
 
 ## Resource management:
-    
+```
+Advantage with the containers is the dynamic resource utilisation. Based on the traffic containers may end up using entire host resources.
+Sometimes due to some issue in the code or memory leaks resources keeps consuming and not released even though there is no much traffic. which affects other containers and host may go down hence it is recommended to define the resources request and limits.
+
+resources:
+    requests:
+        cpu: 
+        memory:
+    limits:
+        cpu:
+        memory:
+
+This can vary from service to service.
+```
+
+## configmaps and secret
+
+## Why do we need services?
+```
+Pods are ephemeral in nature means short lived and can go down at any time.
+Each can have its own unique IP address and it changes for every pod restart.
+Also we will have multiple pod replicas for the same service for high availability.
+We need services for service discovery and load balancing.
+This provides stable IP and DNS name for the group of pods and traffic will be routed to the healthy pods.
+
+We have different types of services like clusterIP, NodePort, LoadBalancer
+```
