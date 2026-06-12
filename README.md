@@ -86,5 +86,32 @@ Also we will have multiple pod replicas for the same service for high availabili
 We need services for service discovery and load balancing.
 This provides stable IP and DNS name for the group of pods and traffic will be routed to the healthy pods.
 
-We have different types of services like clusterIP, NodePort, LoadBalancer
+We have different types of services like clusterIP, NodePort, LoadBalancer, Headless Service
+```
+
+## what is replicaset and how it works in the backgorund?
+```
+Replicaset ensures that the desired no of pod replicas are running at any given point of time.
+Since pods are ephemeral and can go down at any time, replicaset ensures spinning up new pod.
+We have replicaset controller in controller manager which watches the API server.
+And compares the desired state with the actual state and if replica count not matches then it spins up new pod objects.
+scheduler finds the suitable node for the pod.
+Kubelete starts the container invoking container runtime.
+```
+
+## Liveness and Readiness Probe:
+```
+K8s by default checks only if the process is running or not but it wont checks if the app is healthy or not.
+Sometimes due to memory leaks and app deadlocks the app may be running but not healthy.
+During this we should not route traffic to the pods.
+Hence we need to define livness and readiness probes.
+
+liveness : determines when to restart the container.
+readiness : determines whether to route the traffic to the pod or not.
+
+kubelet is responsible for performing the probes on containers.
+if liveness fails then kubelet tells container runtime to restart container.
+if readiness fails then pod is removed from the service endpoints and traffic wont be routed tp that pods.
+
+Here we can define probes using 3 methods : httpGet, exec, tcp socket
 ```
