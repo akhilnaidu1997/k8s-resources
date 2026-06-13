@@ -124,3 +124,21 @@ Even if new node is added then daemonset controller notices the node and spins u
 Mostly used with the agents like fluentd, fluentbit, filebeat, node exporter for monitoring and logging. These agents collects the logs and metrics from nodes and push to central location like ELK and prometheus, cloudwatch for node health monitoring.
 These pods will have read only access to hostpath to collect logs from /var/log folder.
 ```
+
+## EBS vs EFS
+```
+EBS ( Elastic block storage)
+EBS volumes should be in same AZ as that of instance.
+EBS volumes can be mounted to only one ec2 instance
+volumes cant grow as per usage but can be resized.
+it has low latency and high IOPS
+Mostly used to store OS, Databases
+
+EFS is a managed service and its serverless.
+Though we can achive this using ec2 instance by setting up the NFS packages but we are responsible for patching, scaling, pay data transfer costs and pay per hour ec2 instance costs.
+But here aws provides EFS which is highly secure, reliable, 99.9999 11 9's durability and 99.99 high availablity offered by aws.
+It works on NFS v4 protocol.
+We can also trasnsition data stored from one storage class to another automatically.
+can be mounted across multiple ec2 instances for shared access.
+
+```
