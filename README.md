@@ -140,5 +140,13 @@ But here aws provides EFS which is highly secure, reliable, 99.9999 11 9's durab
 It works on NFS v4 protocol.
 We can also trasnsition data stored from one storage class to another automatically.
 can be mounted across multiple ec2 instances for shared access.
+```
 
+## HEadless Service
+```
+Headless service will not have clusterIp and no load balancing.
+Querying headless service DNS gives all Pod Ips and we can establish communication with the required pod.
+Kube proxy doesnot managed the headless service.
+For provisioning headless svc we can define spec.clusterIP: None then we can get the headless svc created.
+Used for stateful applications where requires peer discovery for data replication.
 ```
