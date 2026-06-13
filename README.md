@@ -115,3 +115,12 @@ if readiness fails then pod is removed from the service endpoints and traffic wo
 
 Here we can define probes using 3 methods : httpGet, exec, tcp socket
 ```
+
+## Daemonset:
+```
+Daemonset ensures that a copy of pod replica runs on all eligible nodes.
+If a daemonset pod goes down then it spins up new pod we have daemonset controller in  controller manager which is responsible for spinning up pods.
+Even if new node is added then daemonset controller notices the node and spins up the new pod here.
+Mostly used with the agents like fluentd, fluentbit, filebeat, node exporter for monitoring and logging. These agents collects the logs and metrics from nodes and push to central location like ELK and prometheus, cloudwatch for node health monitoring.
+These pods will have read only access to hostpath to collect logs from /var/log folder.
+```
