@@ -150,3 +150,17 @@ Kube proxy doesnot managed the headless service.
 For provisioning headless svc we can define spec.clusterIP: None then we can get the headless svc created.
 Used for stateful applications where requires peer discovery for data replication.
 ```
+
+## statefulset
+```
+Statefulset pods are used for stateful applications like DB's.
+it maintains pod identity creates pods in orderly manner and deletes in reverse order.
+if a pod goes down then it creates another pod with same and binds to same volumes.
+We need headless svc, cluster IP svc and volumes.
+Each pod can have its own volumes where we use storage classes, volume claim templates.
+```
+
+## What happens when pod crashes
+```
+
+```
