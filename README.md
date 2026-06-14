@@ -162,5 +162,8 @@ Each pod can have its own volumes where we use storage classes, volume claim tem
 
 ## What happens when pod crashes
 ```
-
+When a pod crashes, here kubelet updates the node status to the API server periodically.
+Replicaset controller in controller manager watches for these status, compares the desired state with the actual pod count.
+If it not matches then creates a pod object. Now scheduler finds the suitable node for the pods based on the taints, affinity rules and resource availability.
+kubelet invokes the container runtime to start the container and this way it maintains the desired no of replicas all time.
 ```
