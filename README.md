@@ -247,3 +247,21 @@ kubectl describe pod <pod-name> -> to see the exact error like failed to pull im
 - Authenticate with regsitry
 - verify maifest files
 ```
+
+## what happens when a pod goes into evicted state
+```
+A pod goes into evicted state due to multiple reasons like node is running low on resources like memory pressurce, disk pressure, PID pressure etc
+Also when we have manually drain the nodes.
+pods gets evicted based on evuction prority that k8s assgin using QoS classes.
+Here we have different types of QoS(quality of service) classes like 
+- BestEffort
+- Burstable
+- Gaurenteed
+
+BestEffort pods gets evicted first since we have not defined resource request and limits for this pods. used for batch execution or background jobs. 
+Burstable gets evicted next as the defined request and limits are different. commonly used for regular workloads
+Gaurenteed gets evicted at as we have defined same requests and limits, commonly used for critical workloads.
+
+if the pods are managed by deployment/replicaset then replicaset creates a new pod object and scheduler finds the right suitable node for the pod to be scheduled.
+if standalone pods then they stay in evicted status
+```
