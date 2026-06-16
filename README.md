@@ -232,3 +232,18 @@ kubectl describe pod <pod-name> -> to see the exact error
 kubectl logs <pod-name> --previous -> to see the logs, --previous here used because container might have already restarted and we may not have any logs.
 hence we need to see logs from previous container instance.
 ```
+
+## Imagepullbackoff 
+```
+This error occurs when kubelet tries to pull image from private repo or ECR here image not available, image tag or name mismatch, not authenticated with ECR.
+
+For the first time we get ErrImagePull and kubelet retries pulling image with exponential backoff delay up to 5 mins and eventually pod goes into imagepullbackoff.
+
+To troubleshoot 
+kubectl get pods -> to see the affected pods
+kubectl describe pod <pod-name> -> to see the exact error like failed to pull image
+
+- here we need to verify if image exists in container registry
+- Authenticate with regsitry
+- verify maifest files
+```
