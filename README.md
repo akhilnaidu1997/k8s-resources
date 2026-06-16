@@ -212,3 +212,23 @@ etcd	Cluster-level	Yes
 CoreDNS	Cluster-level	Yes
 kube-proxy	Cluster-level	Yes
 ```
+## Crashloopbackoff
+```
+This error occurs when container keeps crashing inside the pod. kubelet detects this and tries to restart the container based on the restart policy with the help of container runtime but it keeps crashing.
+Exponential backoff restarting here means that the k8s waits for certain time between the restarts like 10s, 20s, 40s, 80s upto 5 minutes which is default and eventually pod goes into crashloopbackoff.
+
+This error occures due to multiple issues
+- wrong configurations or env variables
+- health check probes fail
+- OOM killed
+- app errors
+- dependency on other services or dbs
+- wrong CMD or ENTRYPOINT command defined
+- can also be due to resource requests defined less while containers requires more resources during startup
+
+to troubleshoot this error:
+kubetl get pods -> to see which pods are affected
+kubectl describe pod <pod-name> -> to see the exact error
+kubectl logs <pod-name> --previous -> to see the logs, --previous here used because container might have already restarted and we may not have any logs.
+hence we need to see logs from previous container instance.
+```
