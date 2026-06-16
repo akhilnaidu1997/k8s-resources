@@ -167,3 +167,48 @@ Replicaset controller in controller manager watches for these status, compares t
 If it not matches then creates a pod object. Now scheduler finds the suitable node for the pods based on the taints, affinity rules and resource availability.
 kubelet invokes the container runtime to start the container and this way it maintains the desired no of replicas all time.
 ```
+
+## What exactly happens when a Kubernetes pod gets OOMKilled?
+```
+when a kubernetes pod gets OOM killed, here applications reaches its memory consumption limits.
+Now cgroups detects the limits exceeding and kernel triggers the OOM killer which send SIGKILL to the container.
+Container gets exited with the exit code 137. Kubelet detects this and tries to restart the container with help of container runtime.
+Now this gets repeated failures and eventually pod goes into crashloopbackoff.
+This occurs due to multiple issues like pods require more memory requests while starting up pod and insuffuicient memory limits and inf memory leak issues.
+
+kubectl get pods
+kubectl describe pod <pod name>
+kubectl logs <pod name>
+
+Short term fix:
+increase the no of pod replicas
+increase the limits
+restart the affected pods.
+
+Longterm fix:
+Analyse the logs to understand why memory is keeps consuming due to memory leaks issue
+And work with the developers to fix it
+change memory limits if requires
+```
+
+```
+Cluster-level scope:
+Most components in kube-system (like kube-dns/CoreDNS, kube-proxy, kube-controller-manager, kube-scheduler, etc.) operate across the entire cluster, not just within the kube-system namespace.
+
+Why they are in a namespace:
+Even though they are cluster-scoped in function, Kubernetes still organizes their Pods, ConfigMaps, and Services into the kube-system namespace for logical grouping and isolation.
+This helps:
+
+Avoid accidental modification by users.
+Apply RBAC rules more easily.
+Keep system resources separate from application workloads.
+Examples:
+
+Component	Scope	Runs in kube-system?
+kube-apiserver	Cluster-level	Yes
+kube-controller-manager	Cluster-level	Yes
+kube-scheduler	Cluster-level	Yes
+etcd	Cluster-level	Yes
+CoreDNS	Cluster-level	Yes
+kube-proxy	Cluster-level	Yes
+```
