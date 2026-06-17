@@ -274,11 +274,65 @@ kubectl describe pod <pod-name>
 ```
 coreDNS handles dns resolution in k8s cluster.
 pods are ephmeral in nature and can go dwon anytime.
-For every pod restartit gets a unique IP address and we cannot establish pod to pod communication.
+For every pod restart it gets a unique IP address and we cannot establish pod to pod communication.
 Hence we need services which are used for service dsicovery and load balancing.
-When we create a service then we get static clusterIp and service name gets mapped in coredns.
+When we create a service then we get static clusterIp and service name gets mapped in coredns like it creates a DNS record for the services within the coredns.
 now if app queries another service first coredns resolves dns name into cluster IP.
 Kubeproxy handles the traffic routing to the pods.
 
 The default dns format is service.namespace.svc.cluster.local
+```
+
+## How do you troubleshoot coreDNS
+```
+- coredns runs as a deployment in kube-system namespace.
+- Verify if the pods are running or not.
+- describe pod to see events
+- check pod logs of coredns
+- Exec into pod to verify if the dns resolution working or not.
+- verify /etc/resolve.conf file should have coredns IP.
+- We can also configure coredns using configmap as per our requirement. 
+```
+
+## How do you troubleshoot intermittent packet loss in k8s?
+```
+intermittent packet loss can happen due to multiple issues.
+- node pressure (cpu, memory, disk, PID)
+- pod limits has reached
+- CNI IP exhaustion
+- network policies
+- Ingress rules defined
+- DNS resolution issues
+
+```
+
+## API server
+```
+- when we run kubectl apply -f deployment.yaml now api server authenticates and authorizes the incoming requests.
+- authetnication can be with the IAM policies defined and authoirze happens based on the RBAC access.
+- It checks if this has access to perform this operation.
+- And we have admission controllers like limitrange, resourcequota if we have defined it will be injected into pod manifest.
+- APi server validates the manifest files we have defined.
+- And now stores in etcd.
+- deployment controller watches api server for the assignments and creates deployment, replicaset and pods.
+```
+## scheduler
+```
+- scheduler watches for the unscheduled pods/deployments.
+- finds the right suitable node for the pod to be scheduled based on taints, affinity rules, 
+resources available and node selector defined.
+- first it filters the nodes and scores the nodes.
+- then binds the pod to the node.
+```
+## kubelet
+```
+- kubelet watches for the pod assignments and when it receives( here scheduler updates the node name or binds the pod to particuler node like pod.spec.nodename: node1). 
+- Now kubelet invokes the CRI(container runtime) to pull the image from ECR.
+- before starting container it binds volumes if defined.
+- starts init containers.
+- and starts main containers.
+- If startup porbes are defined then these will run.
+- And livness , readiness checks will happen.
+- if all passes then container will be up and running.
+- kubelet reports status back to api server periodically about node status, pod status etc
 ```
