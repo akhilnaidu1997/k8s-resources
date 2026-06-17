@@ -263,5 +263,22 @@ Burstable gets evicted next as the defined request and limits are different. com
 Gaurenteed gets evicted at as we have defined same requests and limits, commonly used for critical workloads.
 
 if the pods are managed by deployment/replicaset then replicaset creates a new pod object and scheduler finds the right suitable node for the pod to be scheduled.
-if standalone pods then they stay in evicted status
+if standalone pods then they stay in evicted status.
+
+kubectl describe node <node-name> --> to see the node pressure
+kubectl get pods
+kubectl describe pod <pod-name>
+```
+
+## How does DNS works inside k8s
+```
+coreDNS handles dns resolution in k8s cluster.
+pods are ephmeral in nature and can go dwon anytime.
+For every pod restartit gets a unique IP address and we cannot establish pod to pod communication.
+Hence we need services which are used for service dsicovery and load balancing.
+When we create a service then we get static clusterIp and service name gets mapped in coredns.
+now if app queries another service first coredns resolves dns name into cluster IP.
+Kubeproxy handles the traffic routing to the pods.
+
+The default dns format is service.namespace.svc.cluster.local
 ```
