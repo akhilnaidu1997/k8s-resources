@@ -336,3 +336,25 @@ resources available and node selector defined.
 - if all passes then container will be up and running.
 - kubelet reports status back to api server periodically about node status, pod status etc
 ```
+
+## Can you bypass the ingress resource?
+```
+Yes we can bypass the ingress/ALB by running kubectl port-forward svc/<svc-name> 8080:80
+when we run this command now api server authenticates and authorizes the incoming request.
+And routes the request to the kubelet on that node and it routes the traffic to the respective service and to pod.
+Here we can port-forward directly to pod or service and mostly we prefer service for debugging.
+When we want to debug and check if the issue with the application or the service then we do this.
+If we can able to access or can perform health check after port-forwarding then the issue with ALB/ingress.
+If not then issue with the application.
+We can use curl http://localhost:8080/health --> now we get response  based on the health path we used.
+```
+
+## what is the role of kube-proxy?
+```
+kube proxy handles the traffic routing between service to pods.
+service is a logical concept but kube proxy is responsible for routing , load balancing and updating ip tables/ipvs rules.
+kube proxy updates iptables with the clusterIP to backend pod IPs.
+whenever there is an oncimg traffic then kubeproxy routes the traffic to respective pods.
+VPC CNI handles the pod IP assignment along with pod networking.
+kube-proxy handles the service routing, load balancing and maintaining IP tables.
+```

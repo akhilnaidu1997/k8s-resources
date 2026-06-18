@@ -9,3 +9,32 @@ spec:
     requests.memory: "1Gi"
     limits.cpu: "2"
     limits.memory: "2Gi"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-limit-range
+  namespace: default  # Replace with your target namespace
+spec:
+  limits:
+    # Constraints for individual Containers within Pods
+    - type: Container
+      # Minimum resources required for any container
+      min:
+        cpu: "100m"
+        memory: "200Mi"
+      # Maximum resources allowed for any container
+      max:
+        cpu: "200"
+        memory: "200Mi"
+      # Default values injected if the Pod spec omits resources
+      default:
+        cpu: "100m"
+        memory: "100Mi"
+      defaultRequest:
+        cpu: "200m"
+        memory: "200Mi"
+      # Optional: Enforce a ratio between limit and request
+      maxLimitRequestRatio:
+        cpu: "200m"
+        memory: "200Mi"  
